@@ -1,2 +1,2 @@
 # mssc-beer-service
-Beer Service
+Spring Boot Microservice example
