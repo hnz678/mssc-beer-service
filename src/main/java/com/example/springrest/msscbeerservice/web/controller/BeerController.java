@@ -1,6 +1,8 @@
 package com.example.springrest.msscbeerservice.web.controller;
 
 import com.example.springrest.msscbeerservice.web.model.BeerDto;
+import com.example.springrest.msscbeerservice.web.service.BeerService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,25 +13,39 @@ import java.util.UUID;
 @RequestMapping("/api/v1/beer")
 public class BeerController {
 
-    //private BeerService beerService;
+    private BeerService beerService;
+
+    public BeerController(BeerService beerService) {
+        this.beerService = beerService;
+    }
 
     @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID bearId){
+    public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId){
         //to impl
-        return new ResponseEntity<>(BeerDto.builder().build(), HttpStatus.OK );  //200
+        return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK );  //200
     }
 
     @PostMapping
     public ResponseEntity saveNewBeer(@RequestBody BeerDto beerDto){
         //todo impl
+        BeerDto savedDto = beerService.saveNewBeer(beerDto);
 
-        return new ResponseEntity(HttpStatus.CREATED);  //201
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/api/v1/beer"+savedDto.getId().toString());
+        return new ResponseEntity(headers, HttpStatus.CREATED);  //201
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID bearId, @RequestBody BeerDto beerDto){
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto){
         //todo impl
-
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        beerService.updateBeer(beerId, beerDto);
     }
+
+    @DeleteMapping({"/{beerId}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBeer(@PathVariable("beerId") UUID beerId){
+        beerService.deleteById(beerId);
+    }
+
 }
