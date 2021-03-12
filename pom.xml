@@ -18,6 +18,7 @@
         <project.reporting.ourputEncoding>UTF-8</project.reporting.ourputEncoding>
         <java.version>11</java.version>
         <jaxb.version>2.3.0</jaxb.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
         <maven.compiler.cource>${java.version}</maven.compiler.cource>
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
@@ -25,6 +26,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -107,6 +112,17 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
